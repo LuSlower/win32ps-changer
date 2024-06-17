@@ -70,7 +70,8 @@ aquí al parecer si podemos apreciar un 3:1, análogamente los cuantos son fijos
 
 ![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/963c76c7-1f2b-4629-9fa5-680a724bdb81)
 
-gracias a la información de (ya que en msdn no existe):
+gracias a la información de:
+(ya que en msdn fue borrado)
 http://systemmanager.ru/win2k_regestry.en/29623.htm
 
 se puede afirmar que el valor máximo admitido es 3F (111111)
