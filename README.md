@@ -1,6 +1,8 @@
 # win32ps-changer
 Pequeño script para obtener o calcular el valor de Win32PrioritySeparation
 
+[![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases) [![PayPal Badge](https://img.shields.io/badge/PayPal-003087?logo=paypal&logoColor=fff&style=flat)](https://paypal.me/eldontweaks) 
+
 ![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/5df94fae-3034-49f3-b20a-92c46811f65c)
 
 > Win32PrioritySeparation es un valor del Registro que permite ajustar cómo Windows distribuye el tiempo de CPU entre los procesos en primer plano y los procesos en segundo plano.
