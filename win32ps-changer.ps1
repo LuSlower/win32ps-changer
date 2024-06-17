@@ -31,14 +31,13 @@ function Console
     if ($Hide)
     {
         $consolePtr = [Console.Window]::GetConsoleWindow()
-        #0 hide
         $null = [Console.Window]::ShowWindow($consolePtr, 0)
     }
 }
 
 Add-Type -AssemblyName System.Windows.Forms
 
-# Función para calcular Win32PrioritySeparation
+# calcular Win32PrioritySeparation bitmask
 function Calculate-Win32PrioritySeparation {
     param (
         [string]$highBits,
@@ -52,7 +51,7 @@ function Calculate-Win32PrioritySeparation {
     return $decimalValue
 }
 
-# Función para establecer Win32PrioritySeparation
+# establecer Win32PrioritySeparation
 function Set-Win32PrioritySeparation {
     param (
         [int]$newValue
@@ -62,7 +61,7 @@ function Set-Win32PrioritySeparation {
     Set-ItemProperty -Path $key -Name $valueName -Value $newValue
 }
 
-# Función para obtener el valor actual de Win32PrioritySeparation
+# obtener Win32PrioritySeparation
 function Get-CurrentWin32PrioritySeparation {
     $key = "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl"
     $valueName = "Win32PrioritySeparation"
@@ -113,7 +112,7 @@ function Update-Current {
     $textBoxBitmask.Text = $currentValueBinary
 }
 
-# Crear form
+# crear form
 Console -Hide
 [System.Windows.Forms.Application]::EnableVisualStyles();
 $form = New-Object System.Windows.Forms.Form
@@ -168,7 +167,7 @@ $labelLowDescription.Size = New-Object System.Drawing.Size(130, 15)
 $labelLowDescription.Location = New-Object System.Drawing.Point(10, 120)
 $groupBox.Controls.Add($labelLowDescription)
 
-# escribir una máscara de bits
+# escribir una mÃ¡scara de bits
 $labelBitmask = New-Object System.Windows.Forms.Label
 $labelBitmask.Text = "New Bitmask"
 $labelBitmask.Size = New-Object System.Drawing.Size(70, 15)
@@ -179,7 +178,7 @@ $textBoxBitmask = New-Object System.Windows.Forms.TextBox
 $textBoxBitmask.Text = $currentvalueBinary
 $textBoxBitmask.Size = New-Object System.Drawing.Size(45, 20)
 $textBoxBitmask.Location = New-Object System.Drawing.Point(320, 10)
-$textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dígitos
+$textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dÃ­gitos
 $textBoxBitmask.Add_KeyDown({
     param($sender, $e)
     if (-not ($e.KeyCode -eq [System.Windows.Forms.Keys]::D0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::D1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::Back)) {
@@ -204,7 +203,7 @@ $radioOptions = @(
     "14 (20) 010100, Long, Variable, 1:1"
 )
 
-# añadir multiples radios al form
+# aÃ±adir multiples radios al form
 $xPos = 230
 $yPos = 40
 $counter = 0
@@ -212,13 +211,13 @@ foreach ($option in $radioOptions) {
     $radioButton = New-Object System.Windows.Forms.RadioButton
     $textParts = $option.Split(' ')
     $radioButton.Text = $textParts[0,1]  # Mostrar hex (dec)
-    $radioButton.Tag = $option  # Guardar la descripción completa en la propiedad Tag
+    $radioButton.Tag = $option  # Guardar la descripciÃ³n completa en la propiedad Tag
     $radioButton.Location = New-Object System.Drawing.Point($xPos, $yPos)
     $radioButton.AutoSize = $true
     
-    # Agregar ToolTip para mostrar información adicional al hacer hover
+    # ToolTip para mostrar informacion al hacer hover
     $toolTip = New-Object System.Windows.Forms.ToolTip
-    $toolTip.SetToolTip($radioButton, $option.Substring(8))  # Mostrar texto sin hex
+    $toolTip.SetToolTip($radioButton, $option.Substring(8))  # Mostrar bitmask y valores
     
     $form.Controls.Add($radioButton)
     
@@ -231,7 +230,7 @@ foreach ($option in $radioOptions) {
     }
 }
 
-# Refresh button
+# refresh button
 $buttonRefresh = New-Object System.Windows.Forms.Button
 $buttonRefresh.Text = "Refresh"
 $buttonRefresh.Size = New-Object System.Drawing.Size(75, 20)
@@ -268,7 +267,7 @@ $buttonValue.Add_Click({
             $valueText = $control.Text
             $value = [regex]::Match($valueText, '\((\d+)\)').Groups[1].Value
             Set-Win32PrioritySeparation -newValue $value
-            break  # Salir del bucle
+            break  # romper bucle
         }
     }
     Update-Current
@@ -276,5 +275,5 @@ $buttonValue.Add_Click({
 $form.Controls.Add($buttonValue)
 
 
-# Mostrar formulario
+# iniciar form
 $form.ShowDialog()
