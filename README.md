@@ -1,5 +1,5 @@
 # win32ps-changer
-Pequeño script para obtener o calcular el valor de Win32PrioritySeparation
+pequeño form powershell  para obtener o calcular el valor de Win32PrioritySeparation
 
 [![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases) [![PayPal Badge](https://img.shields.io/badge/PayPal-003087?logo=paypal&logoColor=fff&style=flat)](https://paypal.me/eldontweaks) 
 
