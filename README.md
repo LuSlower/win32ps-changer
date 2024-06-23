@@ -57,7 +57,13 @@ backgroundquantum = _36 unidades_
 al parecer esto no tiene nada de 3:1
 en windows server, por que el intervalo es fijo eso anula la `PsPrioritySeparation`
 
-![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/6957b915-e16f-4d9b-aec0-c4a6ca769b96)
+```
+lkd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
++0x281 QuantumReset : 36 '$'
+1kd> dt _KPROCESS ffffa7852c0ec080 -n QuantumReset nt!_KPROCESS //windbg
++0x281 QuantumReset : 36 '$' 1kd> db PspForegroundQuantum 13 fffff801`1fb63574 24 24 24
+lkd> dd PsPrioritySeparation 11 fffff801`1fb2c9d8 00000002
+```
 
 Programs
 26(38), corto, variable, 3:1
@@ -70,7 +76,14 @@ backgroundquantum = 6 unidades
 
 aquí al parecer si podemos apreciar un 3:1, análogamente los cuantos son fijos pero la `PsPrioritySeparation` si es aplicada, debido a que la longitud es variable 
 
-![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/963c76c7-1f2b-4629-9fa5-680a724bdb81)
+```
+1kd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
++0x281 QuantumReset : 6
+1kd> dt _KPROCESS ffffa7852c0ec080 -n QuantumReset nt!_KPROCESS //windbg
++0x281 QuantumReset : 18
+1kd> db PspForegroundQuantum 13 fffff801`1fb63574 06 Oc 12
+lkd> dd PsPrioritySeparation 11 fffff801`1fb2c9d8 00000002
+```
 
 gracias a la información de:
 http://systemmanager.ru/win2k_regestry.en/29623.htm
