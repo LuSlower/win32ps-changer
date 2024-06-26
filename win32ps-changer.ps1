@@ -1,8 +1,8 @@
-# Chequear privilegios de administrador
+# Check administrator privileges
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
 $delay = 2
 if (-not $isAdmin) {
-    [System.Windows.Forms.MessageBox]::Show("Ejecute el script como administrador", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
+    [System.Windows.Forms.MessageBox]::Show("Run the script as administrator", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
     Start-Sleep -Seconds $delay
     Exit
 }
@@ -167,7 +167,7 @@ $labelLowDescription.Size = New-Object System.Drawing.Size(130, 15)
 $labelLowDescription.Location = New-Object System.Drawing.Point(10, 120)
 $groupBox.Controls.Add($labelLowDescription)
 
-# escribir una m√°scara de bits
+# escribir una m·scara de bits
 $labelBitmask = New-Object System.Windows.Forms.Label
 $labelBitmask.Text = "New Bitmask"
 $labelBitmask.Size = New-Object System.Drawing.Size(70, 15)
@@ -178,7 +178,7 @@ $textBoxBitmask = New-Object System.Windows.Forms.TextBox
 $textBoxBitmask.Text = $currentvalueBinary
 $textBoxBitmask.Size = New-Object System.Drawing.Size(45, 20)
 $textBoxBitmask.Location = New-Object System.Drawing.Point(320, 10)
-$textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 d√≠gitos
+$textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dÌgitos
 $textBoxBitmask.Add_KeyDown({
     param($sender, $e)
     if (-not ($e.KeyCode -eq [System.Windows.Forms.Keys]::D0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::D1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::Back)) {
@@ -203,7 +203,7 @@ $radioOptions = @(
     "14 (20) 010100, Long, Variable, 1:1"
 )
 
-# a√±adir multiples radios al form
+# aÒadir multiples radios al form
 $xPos = 230
 $yPos = 40
 $counter = 0
@@ -211,7 +211,7 @@ foreach ($option in $radioOptions) {
     $radioButton = New-Object System.Windows.Forms.RadioButton
     $textParts = $option.Split(' ')
     $radioButton.Text = $textParts[0,1]  # Mostrar hex (dec)
-    $radioButton.Tag = $option  # Guardar la descripci√≥n completa en la propiedad Tag
+    $radioButton.Tag = $option  # Guardar la descripciÛn completa en la propiedad Tag
     $radioButton.Location = New-Object System.Drawing.Point($xPos, $yPos)
     $radioButton.AutoSize = $true
     
