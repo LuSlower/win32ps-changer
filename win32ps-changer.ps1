@@ -138,7 +138,7 @@ $labelHexValue.Location = New-Object System.Drawing.Point(10, 20)
 $groupBox.Controls.Add($labelHexValue)
 
 $labelDecimalValue = New-Object System.Windows.Forms.Label
-$labelDecimalValue.Text = "Decimal: "+ $currentvalueHex
+$labelDecimalValue.Text = "Decimal: "+ $currentvalueDecimal
 $labelDecimalValue.Size = New-Object System.Drawing.Size(130, 15)
 $labelDecimalValue.Location = New-Object System.Drawing.Point(10, 40)
 $groupBox.Controls.Add($labelDecimalValue)
