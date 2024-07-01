@@ -55,7 +55,8 @@ foregroundquantum = _36 unidades_
 backgroundquantum = _36 unidades_
 
 al parecer esto no tiene nada de 3:1
-en windows server, por que el intervalo es fijo eso anula la `PsPrioritySeparation`
+en windows server, por que el intervalo es fijo eso anula la `PsPrioritySeparation` de los cuantos,
+aunque igualmente es tomado como un impulso para la prioridad actual de los procesos en primer plano
 
 ```
 lkd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
