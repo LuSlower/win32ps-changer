@@ -1,10 +1,7 @@
 # Check administrator privileges
-$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
-$delay = 2
-if (-not $isAdmin) {
-    [System.Windows.Forms.MessageBox]::Show("Run the script as administrator", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
-    Start-Sleep -Seconds $delay
-    Exit
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Start-Process powershell "-File `"$PSCommandPath`"" -Verb RunAs
+    exit
 }
 
 function Console
@@ -138,7 +135,7 @@ $labelHexValue.Location = New-Object System.Drawing.Point(10, 20)
 $groupBox.Controls.Add($labelHexValue)
 
 $labelDecimalValue = New-Object System.Windows.Forms.Label
-$labelDecimalValue.Text = "Decimal: "+ $currentvalueDecimal
+$labelDecimalValue.Text = "Decimal: " + $currentvalueDecimal
 $labelDecimalValue.Size = New-Object System.Drawing.Size(130, 15)
 $labelDecimalValue.Location = New-Object System.Drawing.Point(10, 40)
 $groupBox.Controls.Add($labelDecimalValue)
