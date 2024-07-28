@@ -114,16 +114,24 @@ Console -Hide
 [System.Windows.Forms.Application]::EnableVisualStyles();
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "win32ps-changer"
-$form.Size = New-Object System.Drawing.Size(410, 230)
+$form.ClientSize = New-Object System.Drawing.Size(400, 190)
 $form.StartPosition = "CenterScreen"
 $form.MaximizeBox = $false
+$form.MinimizeBox = $false
 $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
+$form.KeyPreview = $true
+$form.Add_KeyDown({
+    param($sender, $e)
+    if ($e.KeyCode -eq [System.Windows.Forms.Keys]::F5) {
+        Update-Current
+    }
+})
 
 # mostrar los datos del valor actual
 $currentValueHex, $currentValueDecimal, $currentValueBinary, $highDescription, $middleDescription, $lowDescription = Get-CurrentWin32PrioritySeparation
 $groupBox = New-Object System.Windows.Forms.GroupBox
 $groupBox.Text = "Current"
-$groupBox.Size = New-Object System.Drawing.Size(200, 150)
+$groupBox.Size = New-Object System.Drawing.Size(200, 165)
 $groupBox.Location = New-Object System.Drawing.Point(10, 10)
 $form.Controls.Add($groupBox)
 
@@ -131,50 +139,50 @@ $form.Controls.Add($groupBox)
 $labelHexValue = New-Object System.Windows.Forms.Label
 $labelHexValue.Text = "Hexadecimal: " + $currentvalueHex
 $labelHexValue.Size = New-Object System.Drawing.Size(130, 15)
-$labelHexValue.Location = New-Object System.Drawing.Point(10, 20)
+$labelHexValue.Location = New-Object System.Drawing.Point(10, 30)
 $groupBox.Controls.Add($labelHexValue)
 
 $labelDecimalValue = New-Object System.Windows.Forms.Label
 $labelDecimalValue.Text = "Decimal: " + $currentvalueDecimal
 $labelDecimalValue.Size = New-Object System.Drawing.Size(130, 15)
-$labelDecimalValue.Location = New-Object System.Drawing.Point(10, 40)
+$labelDecimalValue.Location = New-Object System.Drawing.Point(10, 50)
 $groupBox.Controls.Add($labelDecimalValue)
 
 $labelBinaryValue = New-Object System.Windows.Forms.Label
 $labelBinaryValue.Text = "Binary Value: " + $currentvalueBinary
 $labelBinaryValue.Size = New-Object System.Drawing.Size(130, 15)
-$labelBinaryValue.Location = New-Object System.Drawing.Point(10, 60)
+$labelBinaryValue.Location = New-Object System.Drawing.Point(10, 70)
 $groupBox.Controls.Add($labelBinaryValue)
 
 $labelHighDescription = New-Object System.Windows.Forms.Label
 $labelHighDescription.Text = "Short or Long: " + $highDescription
 $labelHighDescription.Size = New-Object System.Drawing.Size(140, 15)
-$labelHighDescription.Location = New-Object System.Drawing.Point(10, 80)
+$labelHighDescription.Location = New-Object System.Drawing.Point(10, 90)
 $groupBox.Controls.Add($labelHighDescription)
 
 $labelMiddleDescription = New-Object System.Windows.Forms.Label
 $labelMiddleDescription.Text = "Variable or Fixed: " + $middleDescription
 $labelMiddleDescription.Size = New-Object System.Drawing.Size(140, 15)
-$labelMiddleDescription.Location = New-Object System.Drawing.Point(10, 100)
+$labelMiddleDescription.Location = New-Object System.Drawing.Point(10, 110)
 $groupBox.Controls.Add($labelMiddleDescription)
 
 $labelLowDescription = New-Object System.Windows.Forms.Label
 $labelLowDescription.Text = "PrioritySeparation: "+ $lowDescription
 $labelLowDescription.Size = New-Object System.Drawing.Size(130, 15)
-$labelLowDescription.Location = New-Object System.Drawing.Point(10, 120)
+$labelLowDescription.Location = New-Object System.Drawing.Point(10, 130)
 $groupBox.Controls.Add($labelLowDescription)
 
 # escribir una máscara de bits
 $labelBitmask = New-Object System.Windows.Forms.Label
-$labelBitmask.Text = "New Bitmask"
-$labelBitmask.Size = New-Object System.Drawing.Size(70, 15)
-$labelBitmask.Location = New-Object System.Drawing.Point(240, 13)
+$labelBitmask.Text = "Bitmask"
+$labelBitmask.Size = New-Object System.Drawing.Size(50, 15)
+$labelBitmask.Location = New-Object System.Drawing.Point(260, 13)
 $form.Controls.Add($labelBitmask)
 
 $textBoxBitmask = New-Object System.Windows.Forms.TextBox
 $textBoxBitmask.Text = $currentvalueBinary
 $textBoxBitmask.Size = New-Object System.Drawing.Size(45, 20)
-$textBoxBitmask.Location = New-Object System.Drawing.Point(320, 10)
+$textBoxBitmask.Location = New-Object System.Drawing.Point(310, 10)
 $textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dígitos
 $textBoxBitmask.Add_KeyDown({
     param($sender, $e)
@@ -227,16 +235,6 @@ foreach ($option in $radioOptions) {
     }
 }
 
-# refresh button
-$buttonRefresh = New-Object System.Windows.Forms.Button
-$buttonRefresh.Text = "Refresh"
-$buttonRefresh.Size = New-Object System.Drawing.Size(75, 20)
-$buttonRefresh.Location = New-Object System.Drawing.Point(70, 165)
-$buttonRefresh.Add_Click({
-    Update-Current
-})
-$form.Controls.Add($buttonRefresh)
-
 # aplicar bitmask
 $buttonBitmask = New-Object System.Windows.Forms.Button
 $buttonBitmask.Text = "SetBitmask"
@@ -271,6 +269,4 @@ $buttonValue.Add_Click({
 })
 $form.Controls.Add($buttonValue)
 
-
-# iniciar form
 $form.ShowDialog()
