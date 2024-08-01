@@ -62,7 +62,8 @@ although it is also taken as a boost for the current priority of foreground proc
 lkd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
 +0x281 QuantumReset : 36 '$'
 lkd> dt _KPROCESS ffffa7852c0ec080 -n QuantumReset nt!_KPROCESS //windbg
-+0x281 QuantumReset : 36 '$' 1kd> db PspForegroundQuantum 13
++0x281 QuantumReset : 36 '$'
+lkd> db PspForegroundQuantum 13
 fffff801`1fb63574 24 24 24
 lkd> dd PsPrioritySeparation 11
 fffff801`1fb2c9d8 00000002
