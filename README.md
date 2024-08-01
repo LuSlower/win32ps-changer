@@ -1,47 +1,47 @@
 # win32ps-changer
-obtenga o calcule el valor de Win32PrioritySeparation
+get or calculate the value of Win32PrioritySeparation
 
 [![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases) [![PayPal Badge](https://img.shields.io/badge/PayPal-003087?logo=paypal&logoColor=fff&style=flat)](https://paypal.me/eldontweaks) 
 
 ![image](https://github.com/user-attachments/assets/8695e78b-af1d-44ee-9c1a-037d85002b2e)
 
-> Win32PrioritySeparation es un valor del Registro que permite ajustar cómo Windows distribuye el tiempo de CPU entre los procesos en primer plano y los procesos en segundo plano.
+> Win32PrioritySeparation is a registry value that allows you to adjust how Windows distributes CPU time between foreground processes and background processes.
 
-Este valor determina la estrategia de optimización del tiempo del procesador, afectando la duración y la prioridad relativa de los subprocesos en primer plano y en segundo plano.
+This value determines the processor's time optimization strategy, affecting the duration and relative priority of foreground and background threads.
 
-pero que es exactamente?
+But what is it exactly?
 
-`Win32PrioritySeparation` es una máscara de 6 bits (AABBCC), donde cada par de bits controla un aspecto diferente de la estrategia de optimización del tiempo del procesador
+`Win32PrioritySeparation` is a 6-bit mask (AABBCC), where each pair of bits controls a different aspect of the processor's timing optimization strategy
 
-los bits más altos (AA)
-específican la duración del intervalo
-este puede ser corto o largo (short or long)
+highest bits (AA)
+specify the duration of the interval
+This can be short or long (short or long)
 
-los bits del medio (BB)
-específican la longitud del intervalo
-este puede ser variable o fijo (variable or fixed)
+the middle bits (BB)
+specify the length of the interval
+This can be variable or fixed (variable or fixed)
 
-los primeros 4 bits dividen sus valores en esta tabla cuántica:
+The first 4 bits divide their values ​​into this quantum table:
 
-| Dur/Long |  Corto   |  Largo     |
+| Dur/Leng |  Short   |    Long    |
 |----------|----------|------------|
-| Variable | 06 12 18 | 12 24 36  |
-| Fijo     | 18 18 18 | 36 36 36  |
+| Variable | 06 12 18 | 12 24 36   |
+| Fixed    | 18 18 18 | 36 36 36   |
 
-los bits más bajos (CC)
-específican la estrategia de optimización de tiempo de procesador que se debe repartir entre los subprocesos de primer y segundo plano
+lowest bits (CC)
+specify the processor time optimization strategy that should be distributed between the foreground and background threads
 
-este puede ser:
+this can be:
 
-Iguales y fijos (1:1). Los subprocesos en primer plano y en segundo plano obtienen el mismo tiempo de procesador con intervalos fijos.
+Equal and fixed (1:1). Foreground and background threads get the same processor time at fixed intervals.
 
-Relación 2:1. Los subprocesos en primer plano obtienen el doble de tiempo de procesador que los subprocesos en segundo plano.
+2:1 ratio. Foreground threads get twice as much processor time as background threads.
 
-Relación 3:1. Los subprocesos en primer plano obtienen tres veces más tiempo de procesador que los subprocesos en segundo plano. 
+3:1 ratio. Foreground threads get three times more processor time than background threads. 
 
-la separación de prioridad puede variar dependiendo del valor que específiquen, un quantum fijo (fixed) anularía completamente la separación de prioridad entre subprocesos 
+priority separation can vary depending on the value you specify, a fixed quantum would completely nullify priority separation between threads
 
-la forma más conocida de administrar esto es yendo a `sysdm.cpl>settings>advanced` 
+The best known way to manage this is by going to `sysdm.cpl>settings>advanced` 
 
 ![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/b110a7e4-7c5f-4be6-b30d-58b20c8ad995)
 
@@ -54,9 +54,9 @@ foregroundquantum = _36 unidades_
 
 backgroundquantum = _36 unidades_
 
-al parecer esto no tiene nada de 3:1
-en windows server, por que el intervalo es fijo eso anula la `PsPrioritySeparation` de los cuantos,
-aunque igualmente es tomado como un impulso para la prioridad actual de los procesos en primer plano
+apparently this has nothing to do with 3:1
+in windows server, because the interval is fixed that overrides the `PsPrioritySeparation` of the quanta,
+although it is also taken as a boost for the current priority of foreground processes
 
 ```
 lkd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
@@ -68,7 +68,7 @@ lkd> dd PsPrioritySeparation 11
 fffff801`1fb2c9d8 00000002
 ```
 
-Programs
+_Programs_
 26(38), corto, variable, 3:1
 
 bitmask = 010110
@@ -77,7 +77,7 @@ foregroundquantum = 18 unidades
 
 backgroundquantum = 6 unidades
 
-aquí al parecer si podemos apreciar un 3:1, análogamente los cuantos son fijos pero la `PsPrioritySeparation` si es aplicada, debido a que la longitud es variable 
+here it seems we can see a 3:1, similarly the quanta are fixed but the `PsPrioritySeparation` is applied, because the length is variable
 
 ```
 lkd> dt _KPROCESS ffffa78530811080 -n QuantumReset nt!_KPROCESS //dwm
@@ -90,15 +90,14 @@ lkd> dd PsPrioritySeparation 11
 fffff801`1fb2c9d8 00000002
 ```
 
-gracias a la información de:
+thanks to the information from:
 http://systemmanager.ru/win2k_regestry.en/29623.htm
 
-> (ya que en msdn fue borrado)
+It can be stated that the maximum supported value is 3F (111111)
+If any value exceeds the maximum, only the 6 least significant bits (LSB) can be read, which in short would be the 6 bits that start from right to left.
 
-se puede afirmar que el valor máximo admitido es 3F (111111)
-si algún valor sobrepasa el máximo solo podrán leerse los 6 bits menos significativos (LSB), que en pocas palabras serían los 6 bits que comienzan de derecha a izquierda 
+![image](https://github.com/user-attachments/assets/32b0d87f-454c-457e-a6e9-4944c6121402)
 
-![image](https://github.com/LuSlower/Win32Ps-Changer/assets/148411728/8a544a45-f67f-4c3c-acec-0cdb850c2f7c)
 
 
 
