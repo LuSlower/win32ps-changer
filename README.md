@@ -50,9 +50,9 @@ _Background Services_
 
 bitmask = 000010
 
-foregroundquantum = _36 unidades_
+foregroundquantum = _36 units_
 
-backgroundquantum = _36 unidades_
+backgroundquantum = _36 units_
 
 apparently this has nothing to do with 3:1
 in windows server, because the interval is fixed that overrides the `PsPrioritySeparation` of the quanta,
@@ -70,13 +70,13 @@ fffff801`1fb2c9d8 00000002
 ```
 
 _Programs_
-26(38), corto, variable, 3:1
+26(38), short, variable, 3:1
 
 bitmask = 010110
 
-foregroundquantum = 18 unidades
+foregroundquantum = _18 units_
 
-backgroundquantum = 6 unidades
+backgroundquantum = _6 units_
 
 here it seems we can see a 3:1, similarly the quanta are fixed but the `PsPrioritySeparation` is applied, because the length is variable
 
