@@ -92,7 +92,7 @@ fffff801`1fb2c9d8 00000002
 ```
 
 thanks to the information from:
-http://systemmanager.ru/win2k_regestry.en/29623.htm
+https://learn.microsoft.com/en-us/previous-versions/cc976120(v=technet.10)?redirectedfrom=MSDN
 
 It can be stated that the maximum supported value is 3F (111111)
 If any value exceeds the maximum, only the 6 least significant bits (LSB) can be read, which in short would be the 6 bits that start from right to left.
