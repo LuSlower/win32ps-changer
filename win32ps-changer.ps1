@@ -120,6 +120,7 @@ $form.MaximizeBox = $false
 $form.MinimizeBox = $false
 $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
 $form.KeyPreview = $true
+$form.BackColor = [System.Drawing.Color]::FromArgb(44, 44, 44)
 $form.Add_KeyDown({
     param($sender, $e)
     if ($e.KeyCode -eq [System.Windows.Forms.Keys]::F5) {
@@ -131,6 +132,8 @@ $form.Add_KeyDown({
 $currentValueHex, $currentValueDecimal, $currentValueBinary, $highDescription, $middleDescription, $lowDescription = Get-CurrentWin32PrioritySeparation
 $groupBox = New-Object System.Windows.Forms.GroupBox
 $groupBox.Text = "Current"
+$groupBox.BackColor = [System.Drawing.Color]::Transparent
+$groupBox.ForeColor = [System.Drawing.Color]::White
 $groupBox.Size = New-Object System.Drawing.Size(200, 165)
 $groupBox.Location = New-Object System.Drawing.Point(10, 10)
 $form.Controls.Add($groupBox)
@@ -138,36 +141,48 @@ $form.Controls.Add($groupBox)
 # Crear y configurar los labels
 $labelHexValue = New-Object System.Windows.Forms.Label
 $labelHexValue.Text = "Hexadecimal: " + $currentvalueHex
+$labelHexValue.BackColor = [System.Drawing.Color]::Transparent
+$labelHexValue.ForeColor = [System.Drawing.Color]::White
 $labelHexValue.Size = New-Object System.Drawing.Size(130, 15)
 $labelHexValue.Location = New-Object System.Drawing.Point(10, 30)
 $groupBox.Controls.Add($labelHexValue)
 
 $labelDecimalValue = New-Object System.Windows.Forms.Label
 $labelDecimalValue.Text = "Decimal: " + $currentvalueDecimal
+$labelDecimalValue.BackColor = [System.Drawing.Color]::Transparent
+$labelDecimalValue.ForeColor = [System.Drawing.Color]::White
 $labelDecimalValue.Size = New-Object System.Drawing.Size(130, 15)
 $labelDecimalValue.Location = New-Object System.Drawing.Point(10, 50)
 $groupBox.Controls.Add($labelDecimalValue)
 
 $labelBinaryValue = New-Object System.Windows.Forms.Label
 $labelBinaryValue.Text = "Binary Value: " + $currentvalueBinary
+$labelBinaryValue.BackColor = [System.Drawing.Color]::Transparent
+$labelBinaryValue.ForeColor = [System.Drawing.Color]::White
 $labelBinaryValue.Size = New-Object System.Drawing.Size(130, 15)
 $labelBinaryValue.Location = New-Object System.Drawing.Point(10, 70)
 $groupBox.Controls.Add($labelBinaryValue)
 
 $labelHighDescription = New-Object System.Windows.Forms.Label
 $labelHighDescription.Text = "Short or Long: " + $highDescription
+$labelHighDescription.BackColor = [System.Drawing.Color]::Transparent
+$labelHighDescription.ForeColor = [System.Drawing.Color]::White
 $labelHighDescription.Size = New-Object System.Drawing.Size(140, 15)
 $labelHighDescription.Location = New-Object System.Drawing.Point(10, 90)
 $groupBox.Controls.Add($labelHighDescription)
 
 $labelMiddleDescription = New-Object System.Windows.Forms.Label
 $labelMiddleDescription.Text = "Variable or Fixed: " + $middleDescription
+$labelMiddleDescription.BackColor = [System.Drawing.Color]::Transparent
+$labelMiddleDescription.ForeColor = [System.Drawing.Color]::White
 $labelMiddleDescription.Size = New-Object System.Drawing.Size(140, 15)
 $labelMiddleDescription.Location = New-Object System.Drawing.Point(10, 110)
 $groupBox.Controls.Add($labelMiddleDescription)
 
 $labelLowDescription = New-Object System.Windows.Forms.Label
 $labelLowDescription.Text = "PrioritySeparation: "+ $lowDescription
+$labelLowDescription.BackColor = [System.Drawing.Color]::Transparent
+$labelLowDescription.ForeColor = [System.Drawing.Color]::White
 $labelLowDescription.Size = New-Object System.Drawing.Size(130, 15)
 $labelLowDescription.Location = New-Object System.Drawing.Point(10, 130)
 $groupBox.Controls.Add($labelLowDescription)
@@ -175,7 +190,9 @@ $groupBox.Controls.Add($labelLowDescription)
 # escribir una máscara de bits
 $labelBitmask = New-Object System.Windows.Forms.Label
 $labelBitmask.Text = "Bitmask"
-$labelBitmask.Size = New-Object System.Drawing.Size(50, 15)
+$labelBitmask.BackColor = [System.Drawing.Color]::Transparent
+$labelBitmask.ForeColor = [System.Drawing.Color]::White
+$labelBitmask.Size = New-Object System.Drawing.Size(45, 15)
 $labelBitmask.Location = New-Object System.Drawing.Point(260, 13)
 $form.Controls.Add($labelBitmask)
 
@@ -184,6 +201,9 @@ $textBoxBitmask.Text = $currentvalueBinary
 $textBoxBitmask.Size = New-Object System.Drawing.Size(45, 20)
 $textBoxBitmask.Location = New-Object System.Drawing.Point(310, 10)
 $textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dígitos
+$textBoxBitmask.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+$textBoxBitmask.BackColor = [System.Drawing.Color]::FromArgb(44, 44, 44)
+$textBoxBitmask.ForeColor = [System.Drawing.Color]::White
 $textBoxBitmask.Add_KeyDown({
     param($sender, $e)
     if (-not ($e.KeyCode -eq [System.Windows.Forms.Keys]::D0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::D1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad0 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::NumPad1 -or $e.KeyCode -eq [System.Windows.Forms.Keys]::Back)) {
@@ -219,6 +239,8 @@ foreach ($option in $radioOptions) {
     $radioButton.Tag = $option  # Guardar la descripción completa en la propiedad Tag
     $radioButton.Location = New-Object System.Drawing.Point($xPos, $yPos)
     $radioButton.AutoSize = $true
+    $radioButton.BackColor = [System.Drawing.Color]::Transparent
+    $radioButton.ForeColor = [System.Drawing.Color]::White
     
     # ToolTip para mostrar informacion al hacer hover
     $toolTip = New-Object System.Windows.Forms.ToolTip
@@ -240,6 +262,10 @@ $buttonBitmask = New-Object System.Windows.Forms.Button
 $buttonBitmask.Text = "SetBitmask"
 $buttonBitmask.Size = New-Object System.Drawing.Size(75, 20)
 $buttonBitmask.Location = New-Object System.Drawing.Point(220, 165)
+$buttonBitmask.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+$buttonBitmask.BackColor = [System.Drawing.Color]::FromArgb(66, 66, 66)
+$buttonBitmask.ForeColor = [System.Drawing.Color]::White
+$buttonBitmask.FlatAppearance.BorderSize = 0
 $buttonBitmask.Add_Click({
     $newBitmask = $textBoxBitmask.Text
     $highBits = $newBitmask.Substring(0, 2)
@@ -256,6 +282,10 @@ $buttonValue = New-Object System.Windows.Forms.Button
 $buttonValue.Text = "SetValue"
 $buttonValue.Size = New-Object System.Drawing.Size(75, 20)
 $buttonValue.Location = New-Object System.Drawing.Point(310, 165)
+$buttonValue.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+$buttonValue.BackColor = [System.Drawing.Color]::FromArgb(66, 66, 66)
+$buttonValue.ForeColor = [System.Drawing.Color]::White
+$buttonValue.FlatAppearance.BorderSize = 0
 $buttonValue.Add_Click({
     foreach ($control in $form.Controls) {
         if ($control -is [System.Windows.Forms.RadioButton] -and $control.Checked) {
