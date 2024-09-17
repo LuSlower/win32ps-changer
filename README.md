@@ -3,7 +3,7 @@ get or calculate the value of Win32PrioritySeparation
 
 [![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases) [![PayPal Badge](https://img.shields.io/badge/PayPal-003087?logo=paypal&logoColor=fff&style=flat)](https://paypal.me/eldontweaks) 
 
-![image](https://github.com/user-attachments/assets/8695e78b-af1d-44ee-9c1a-037d85002b2e)
+![image](https://github.com/user-attachments/assets/9a0e1c9c-d67f-4dcd-a7bb-07225941b99a)
 
 > Win32PrioritySeparation is a registry value that allows you to adjust how Windows distributes CPU time between foreground processes and background processes.
 
