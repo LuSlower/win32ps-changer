@@ -1,7 +1,7 @@
 # win32ps-changer
 get or calculate the value of Win32PrioritySeparation
 
-[![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases) [![PayPal Badge](https://img.shields.io/badge/PayPal-003087?logo=paypal&logoColor=fff&style=flat)](https://paypal.me/eldontweaks) 
+[![Total Downloads](https://img.shields.io/github/downloads/LuSlower/win32ps-changer/total.svg)](https://github.com/LuSlower/win32ps-changer/releases)
 
 ![image](https://github.com/user-attachments/assets/9a0e1c9c-d67f-4dcd-a7bb-07225941b99a)
 
