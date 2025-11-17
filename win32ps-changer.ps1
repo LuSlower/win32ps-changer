@@ -1,4 +1,4 @@
-# Check administrator privileges
+
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Start-Process powershell "-File `"$PSCommandPath`"" -Verb RunAs
     exit
@@ -34,7 +34,7 @@ function Console
 
 Add-Type -AssemblyName System.Windows.Forms
 
-# calcular Win32PrioritySeparation bitmask
+
 function Calculate-Win32PrioritySeparation {
     param (
         [string]$highBits,
@@ -48,7 +48,7 @@ function Calculate-Win32PrioritySeparation {
     return $decimalValue
 }
 
-# establecer Win32PrioritySeparation
+
 function Set-Win32PrioritySeparation {
     param (
         [int]$newValue
@@ -58,7 +58,7 @@ function Set-Win32PrioritySeparation {
     Set-ItemProperty -Path $key -Name $valueName -Value $newValue
 }
 
-# obtener Win32PrioritySeparation
+
 function Get-CurrentWin32PrioritySeparation {
     $key = "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl"
     $valueName = "Win32PrioritySeparation"
@@ -109,7 +109,7 @@ function Update-Current {
     $textBoxBitmask.Text = $currentValueBinary
 }
 
-# crear form
+
 Console -Hide
 [System.Windows.Forms.Application]::EnableVisualStyles();
 $form = New-Object System.Windows.Forms.Form
@@ -128,7 +128,7 @@ $form.Add_KeyDown({
     }
 })
 
-# mostrar los datos del valor actual
+
 $currentValueHex, $currentValueDecimal, $currentValueBinary, $highDescription, $middleDescription, $lowDescription = Get-CurrentWin32PrioritySeparation
 $groupBox = New-Object System.Windows.Forms.GroupBox
 $groupBox.Text = "Current"
@@ -138,7 +138,7 @@ $groupBox.Size = New-Object System.Drawing.Size(200, 165)
 $groupBox.Location = New-Object System.Drawing.Point(10, 10)
 $form.Controls.Add($groupBox)
 
-# Crear y configurar los labels
+
 $labelHexValue = New-Object System.Windows.Forms.Label
 $labelHexValue.Text = "Hexadecimal: " + $currentvalueHex
 $labelHexValue.BackColor = [System.Drawing.Color]::Transparent
@@ -187,7 +187,7 @@ $labelLowDescription.Size = New-Object System.Drawing.Size(130, 15)
 $labelLowDescription.Location = New-Object System.Drawing.Point(10, 130)
 $groupBox.Controls.Add($labelLowDescription)
 
-# escribir una máscara de bits
+
 $labelBitmask = New-Object System.Windows.Forms.Label
 $labelBitmask.Text = "Bitmask"
 $labelBitmask.BackColor = [System.Drawing.Color]::Transparent
@@ -200,7 +200,7 @@ $textBoxBitmask = New-Object System.Windows.Forms.TextBox
 $textBoxBitmask.Text = $currentvalueBinary
 $textBoxBitmask.Size = New-Object System.Drawing.Size(45, 20)
 $textBoxBitmask.Location = New-Object System.Drawing.Point(310, 10)
-$textBoxBitmask.MaxLength = 6  # Limitar la entrada a 6 dígitos
+$textBoxBitmask.MaxLength = 6  
 $textBoxBitmask.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
 $textBoxBitmask.BackColor = [System.Drawing.Color]::FromArgb(44, 44, 44)
 $textBoxBitmask.ForeColor = [System.Drawing.Color]::White
@@ -212,7 +212,7 @@ $textBoxBitmask.Add_KeyDown({
 })
 $form.Controls.Add($textBoxBitmask)
 
-# Definir los valores de radio buttons
+
 $radioOptions = @(
     "2A (42) 101010, Short, Fixed , 3:1",
     "29 (41) 101001, Short, Fixed , 2:1",
@@ -228,23 +228,23 @@ $radioOptions = @(
     "14 (20) 010100, Long, Variable, 1:1"
 )
 
-# añadir multiples radios al form
+
 $xPos = 230
 $yPos = 40
 $counter = 0
 foreach ($option in $radioOptions) {
     $radioButton = New-Object System.Windows.Forms.RadioButton
     $textParts = $option.Split(' ')
-    $radioButton.Text = $textParts[0,1]  # Mostrar hex (dec)
-    $radioButton.Tag = $option  # Guardar la descripción completa en la propiedad Tag
+    $radioButton.Text = $textParts[0,1]  
+    $radioButton.Tag = $option  
     $radioButton.Location = New-Object System.Drawing.Point($xPos, $yPos)
     $radioButton.AutoSize = $true
     $radioButton.BackColor = [System.Drawing.Color]::Transparent
     $radioButton.ForeColor = [System.Drawing.Color]::White
     
-    # ToolTip para mostrar informacion al hacer hover
+    
     $toolTip = New-Object System.Windows.Forms.ToolTip
-    $toolTip.SetToolTip($radioButton, $option.Substring(8))  # Mostrar bitmask y valores
+    $toolTip.SetToolTip($radioButton, $option.Substring(8))  
     
     $form.Controls.Add($radioButton)
     
@@ -257,7 +257,7 @@ foreach ($option in $radioOptions) {
     }
 }
 
-# aplicar bitmask
+
 $buttonBitmask = New-Object System.Windows.Forms.Button
 $buttonBitmask.Text = "SetBitmask"
 $buttonBitmask.Size = New-Object System.Drawing.Size(75, 20)
@@ -277,7 +277,7 @@ $buttonBitmask.Add_Click({
 })
 $form.Controls.Add($buttonBitmask)
 
-# aplicar valor de radio
+
 $buttonValue = New-Object System.Windows.Forms.Button
 $buttonValue.Text = "SetValue"
 $buttonValue.Size = New-Object System.Drawing.Size(75, 20)
@@ -285,6 +285,7 @@ $buttonValue.Location = New-Object System.Drawing.Point(310, 165)
 $buttonValue.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 $buttonValue.BackColor = [System.Drawing.Color]::FromArgb(66, 66, 66)
 $buttonValue.ForeColor = [System.Drawing.Color]::White
+
 $buttonValue.FlatAppearance.BorderSize = 0
 $buttonValue.Add_Click({
     foreach ($control in $form.Controls) {
@@ -292,7 +293,7 @@ $buttonValue.Add_Click({
             $valueText = $control.Text
             $value = [regex]::Match($valueText, '\((\d+)\)').Groups[1].Value
             Set-Win32PrioritySeparation -newValue $value
-            break  # romper bucle
+            break  
         }
     }
     Update-Current
